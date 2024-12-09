@@ -22,8 +22,8 @@ enum TRACK{
   TRACK_STOP
 };
 
-const char* ssid = "AR RoboTics";    // <<< change this as yours
-const char* password = "raghu@2112"; // <<< change this as yours
+const char* ssid = "xxxxxxx";    // <<< change this as yours
+const char* password = "xxxxxxxx"; // <<< change this as yours
 //holds the current upload
 int cameraInitState = -1;
 uint8_t* jpgBuff = new uint8_t[68123];
@@ -219,19 +219,22 @@ void setup(void) {
   digitalWrite(LED_BUILT_IN, LOW);
 
   pinMode(PINDC_LEFT_BACK, OUTPUT);
-  ledcSetup(LEFT_CHANNEL, 100, 8);//channel, freq, resolution
-  ledcAttachPin(PINDC_LEFT_FORWARD, LEFT_CHANNEL);
+  //ledcSetup(LEFT_CHANNEL, 100, 8);//channel, freq, resolution   //deprecated
+  //ledcAttachPin(PINDC_LEFT_FORWARD, LEFT_CHANNEL);           //deprecated
+  ledcAttach(PINDC_LEFT_FORWARD,100,8);
   pinMode(PINDC_RIGHT_BACK, OUTPUT);
-  ledcSetup(RIGHT_CHANNEL, 100, 8);//channel, freq, resolution
-  ledcAttachPin(PINDC_RIGHT_FORWARD, RIGHT_CHANNEL);
+  //ledcSetup(RIGHT_CHANNEL, 100, 8);//channel, freq, resolution    //deprecated
+  //ledcAttachPin(PINDC_RIGHT_FORWARD, RIGHT_CHANNEL);            //deprecated 
+  ledcAttach(PINDC_RIGHT_BACK,100,8);
 
   controlDC(LOW,LOW,LOW,LOW);
 
   // 1. 50hz ==> period = 20ms (sg90 servo require 20ms pulse, duty cycle is 1->2ms: -90=>90degree)
   // 2. resolution = 16, maximum value is 2^16-1=65535
   // From 1 and 2 => -90=>90 degree or 0=>180degree ~ 3276=>6553
-  ledcSetup(SERVO_PITCH_CHANNEL, 50, 16);//channel, freq, resolution
-  ledcAttachPin(PIN_SERVO_PITCH, SERVO_PITCH_CHANNEL);// pin, channel
+  //ledcSetup(SERVO_PITCH_CHANNEL, 50, 16);//channel, freq, resolution  //deprecated
+  //ledcAttachPin(PIN_SERVO_PITCH, SERVO_PITCH_CHANNEL);// pin, channel   //deprecated
+  ledcAttach(PIN_SERVO_PITCH,50,16);
   servoWrite(SERVO_PITCH_CHANNEL, posServo);
 
   // ledcSetup(SERVO_YAW_CHANNEL, 50, 16);//channel, freq, resolution
